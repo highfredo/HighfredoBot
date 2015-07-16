@@ -17,12 +17,7 @@ bot.getMe().then(function (me) {
 
 
 utils.getGlobbedFiles('./plugins/**/*.js').forEach(function(modelPath) {
-    /* {
-         name: pluginName,
-         match: matcher function,
-         exec: exec function
-     } */
-    var plugin = require(path.resolve(modelPath))(bot);
+    var plugin = require(path.resolve(modelPath))(bot, conf);
 
     if(!plugin.match) {
         plugin.match = function (msg) {
