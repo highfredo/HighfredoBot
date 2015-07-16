@@ -8,7 +8,7 @@ module.exports = function(bot) {
     var description = "simple calculator";
 
     var exec = function(msg) {
-        bot.sendMessage(msg.chat.id, math.eval(msg.command.text));
+        bot.sendMessage(msg.chat.id, math.eval(msg.command.text)+"" || 'Math Error');
     };
 
     return {

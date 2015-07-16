@@ -41,6 +41,7 @@ bot.on('message', function (msg) {
 
     // Parse msg text
     if(_.startsWith(msg.text, '/')) {
+        // FIXME: si me nombran no va, ej: /help@HighfredoBot
         var splitText = msg.text.split(" ");
         msg.command = {
             name: splitText.shift().substr(1),
