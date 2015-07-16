@@ -4,6 +4,7 @@
   "dependencies": {
     "glob": "^5.0.14",
     "lodash": "^3.10.0",
+    "mathjs": "^1.7.1",
     "node-telegram-bot-api": "^0.10.0",
     "path": "^0.11.14",
     "request": "^2.58.0"

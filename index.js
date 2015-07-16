@@ -41,9 +41,9 @@ bot.on('message', function (msg) {
 
     // Parse msg text
     if(_.startsWith(msg.text, '/')) {
-        var splitText = _.words(msg.text);
+        var splitText = msg.text.split(" ");
         msg.command = {
-            name: splitText.shift().substr(0),
+            name: splitText.shift().substr(1),
             options: splitText,
             text: splitText.join(' ')
         }
@@ -57,6 +57,8 @@ bot.on('message', function (msg) {
             console.log(plugin.name + " valid.");
             plugin.exec(msg);
             return false;
+        } else {
+            // console.log(plugin.name + " not valid.");
         }
     });
 });
