@@ -1,0 +1,6 @@
+{
+  "bot": {
+    "token": "<ask @BotFather>",
+    "opts": {"polling": true}
+  }
+}

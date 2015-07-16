@@ -1,0 +1,11 @@
+{
+  "name": "HighfredoBot",
+  "version": "0.0.1",
+  "dependencies": {
+    "glob": "^5.0.14",
+    "lodash": "^3.10.0",
+    "node-telegram-bot-api": "^0.10.0",
+    "path": "^0.11.14",
+    "request": "^2.58.0"
+  }
+}
