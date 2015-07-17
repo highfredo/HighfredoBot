@@ -9,14 +9,14 @@ module.exports = function(bot) {
     var name = "4chan";
     var description = "4chan random pics";
 
-    var exec = function(msg) {
+    var exec = function(msg, reply) {
 
-        var board = msg.command.options[0] || 'b';
+        var board = msg.command.params[0] || 'b';
 
         request({url:'https://a.4cdn.org/'+board+'/threads.json', json:true},
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    bot.sendChatAction(msg.chat.id, 'upload_photo');
+                    reply.sendChatAction('upload_photo');
                     var randomPage = _.random(body.length - 1);
                     var threads = body[randomPage].threads;
                     var randomThread = _.random(threads.length - 1);
@@ -28,13 +28,10 @@ module.exports = function(bot) {
                         var post = posts[randomPost];
 
                         var document = request('https://i.4cdn.org/'+board+'/'+ post.tim + post.ext);
-                        if(_.includes([".jpeg", ".jpg", ".png"], post.ext))
-                            bot.sendPhoto(msg.chat.id, document);
-                        else
-                            bot.sendDocument(msg.chat.id, document);
+                        reply.send(document);
                     });
                 } else {
-                    bot.sendMessage(msg.chat.id, "Error...");
+                    reply.sendMessage("Error...");
                 }
             });
     };

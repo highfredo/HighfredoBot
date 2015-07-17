@@ -5,8 +5,8 @@ module.exports = function(bot) {
     var name = "echo";
     var description = "Echo your message";
 
-    var exec = function(msg) {
-        bot.sendMessage(msg.chat.id, msg.command.text);
+    var exec = function(msg, reply) {
+        reply.sendMessage(msg.command.text);
     };
 
     return {

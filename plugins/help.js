@@ -7,7 +7,7 @@ module.exports = function(bot) {
     var name = "help";
     var description = "help plugin";
 
-    var exec = function(msg) {
+    var exec = function(msg, reply) {
 
         var response = "";
 
@@ -16,7 +16,7 @@ module.exports = function(bot) {
             response+="\n";
         });
 
-        bot.sendMessage(msg.chat.id, response);
+        reply.sendMessage(response);
     };
 
     return {
