@@ -25,19 +25,19 @@ var reply = function (chatId) {
             var funtionType = utils.lookupFunctionType(data, options || {});
 
             if(funtionType === 'message') {
-                this.sendMessage(data, options);
+                return this.sendMessage(data, options);
             } else if(funtionType === 'photo') {
-                this.sendPhoto(data, options);
+                return this.sendPhoto(data, options);
             } else if(funtionType === 'audio') {
-                this.sendAudio(data, options);
+                return this.sendAudio(data, options);
             } else if(funtionType === 'document') {
-                this.sendDocument(data, options);
+                return this.sendDocument(data, options);
             } else if(funtionType === 'sticker') {
-                this.sendSticker(data, options);
+                return this.sendSticker(data, options);
             } else if(funtionType === 'video') {
-                this.sendVideo(data, options);
+                return this.sendVideo(data, options);
             } else if(funtionType === 'location') {
-                this.sendLocation(data.lat, data.lng, options);
+                return this.sendLocation(data.lat, data.lng, options);
             } else {
                 throw new Error('Not valid FunctionType');
             }
