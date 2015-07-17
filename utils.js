@@ -6,7 +6,7 @@ var _ = require('lodash'),
     URL = require('URL'),
     path = require('path'),
     stream = require('stream'),
-    conf = require('./conf.json');
+    mimeTypes = require('./mimeTypes.json');
 
 
 /**
@@ -25,10 +25,10 @@ module.exports.lookupFunctionType = function(data, options) {
         var fileName = URL.parse(path.basename(data.path)).pathname;
         var mimeType = options.mime || mime.lookup(fileName);
 
-        if (_.includes(conf.mimes.photo, mimeType))   return "photo";
-        if (_.includes(conf.mimes.audio, mimeType))   return "audio";
-        if (_.includes(conf.mimes.sticker, mimeType)) return "sticker";
-        if (_.includes(conf.mimes.video, mimeType))   return "video";
+        if (_.includes(mimeTypes.photo, mimeType))   return "photo";
+        if (_.includes(mimeTypes.audio, mimeType))   return "audio";
+        if (_.includes(mimeTypes.sticker, mimeType)) return "sticker";
+        if (_.includes(mimeTypes.video, mimeType))   return "video";
 
         return "document";
     }

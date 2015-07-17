@@ -1,0 +1,6 @@
+{
+  "photo":["image/jpeg", "image/png"],
+  "audio":["audio/ogg"],
+  "sticker":["image/webp"],
+  "video":["video/mp4"]
+}
