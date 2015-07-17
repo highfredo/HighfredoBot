@@ -4,9 +4,6 @@ var TelegramBot = require('node-telegram-bot-api'),
     _ = require('lodash'),
     path = require('path'),
     utils = require('./utils'),
-    mime = require('mime'),
-    URL = require('URL'),
-    stream = require('stream'),
     conf = require('./conf.json');
 
 
@@ -17,28 +14,6 @@ bot.plugins = [];
 // Reply functions
 var reply = function (chatId) {
 
-    var lookupFunctionType = function(data, options) {
-        if(typeof data === 'string') {
-            return "message"; // TODO: tb se podrian enviar file_id o file_path, de momento solo soporto streams
-        }
-
-        if (data instanceof stream.Stream) {
-            var fileName = URL.parse(path.basename(data.path)).pathname;
-            var mimeType = options.mime || mime.lookup(fileName);
-
-            if (_.includes(conf.mimes.photo, mimeType))   return "photo";
-            if (_.includes(conf.mimes.audio, mimeType))   return "audio";
-            if (_.includes(conf.mimes.sticker, mimeType)) return "sticker";
-            if (_.includes(conf.mimes.video, mimeType))   return "video";
-
-            return "document";
-        }
-
-        if(data instanceof Object && data.lat && data.lng) {
-            return "location";
-        }
-    };
-
     return {
         forwardMessage: function(fromChatId, messageId) {
             return bot.forwardMessage(chatId, fromChatId, messageId)
@@ -47,8 +22,7 @@ var reply = function (chatId) {
             return bot.sendChatAction(chatId, action);
         },
         send: function(data, options) {
-            var funtionType = lookupFunctionType(data, options || {});
-            console.log(funtionType);
+            var funtionType = utils.lookupFunctionType(data, options || {});
 
             if(funtionType === 'message') {
                 this.sendMessage(data, options);
@@ -108,18 +82,6 @@ var loadPlugin = function(pluginPath) {
 };
 
 
-var parseCommand = function(txt) {
-    var splitText = txt.split(' ');
-    return {
-        name: splitText.shift().substr(1).split('@')[0],
-        params: splitText,
-        text: splitText.join(' ')
-    }
-};
-
-
-
-
 
 
 /**
@@ -149,7 +111,7 @@ bot.on('message', function (msg) {
 
     // Parse msg text
     if(_.startsWith(msg.text, '/')) {
-        msg.command = parseCommand(msg.text);
+        msg.command = utils.parseCommand(msg.text);
         console.log(msg);
     }
 
