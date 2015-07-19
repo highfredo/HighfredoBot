@@ -5,7 +5,7 @@ var _ = require('lodash'),
     request = require('request');
 
 
-module.exports = function() {
+module.exports = function(bot) {
 
     var name = "pokedex";
     var description = "soy una pokedex";
@@ -16,10 +16,10 @@ module.exports = function() {
         var pokemonInfo = {};
         return rp({url:api + pokemonQuery, json:true})
             .then(function(pokemon) {
-                pokemonInfo.text = 'Pokédex ID: ' + pokemon.pkdx_id
+                pokemonInfo.text = 'PokÃ©dex ID: ' + pokemon.pkdx_id
                     +'\nNombre: ' + pokemon.name
-                    +'\nPeso: ' + (pokemon.weight/10) + " kg" // dividir entre 10
-                    +'\nAltura: ' + (pokemon.height/10) + " m" // dividir entre 10
+                    +'\nPeso: ' + (pokemon.weight/10) + " kg"
+                    +'\nAltura: ' + (pokemon.height/10) + " m"
                     +'\nVelocidad: ' + pokemon.speed;
 
                 // console.log(pokemonInfo.text);
@@ -29,20 +29,17 @@ module.exports = function() {
                 pokemonInfo.image = request(base + spriteInfo.image);
                 return pokemonInfo;
             });
-    }
+    };
 
     var exec = function(msg, reply) {
         var pokemon = msg.command.params[0] || "";
         reply.sendChatAction('typing');
         pokedex(pokemon)
             .then(function(pokemonInfo){
-                reply.send(pokemonInfo.image)
-                    .then(function(){
-                        reply.sendMessage(pokemonInfo.text);
-                    })
+                reply.send(pokemonInfo.image, {caption: pokemonInfo.text});
             })
-            .catch(function(){
-                reply.sendMessage("No se ha encontrado ningún pokemon");
+            .catch(function(err){
+                reply.sendMessage("No se ha encontrado ningÃºn pokemon");
             });
     };
 
@@ -50,7 +47,7 @@ module.exports = function() {
         name: name,
         exec: exec,
         description: description,
-        help: '/' + name + " [palabra] - " + description
+        help: '/' + name + " [pokemon/id] - " + description
     }
 
 

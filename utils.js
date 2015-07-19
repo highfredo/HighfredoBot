@@ -3,7 +3,7 @@
 var _ = require('lodash'),
 	glob = require('glob'),
     mime = require('mime'),
-    URL = require('URL'),
+    URL = require('url'),
     path = require('path'),
     stream = require('stream'),
     mimeTypes = require('./mimeTypes.json');
@@ -13,17 +13,19 @@ var _ = require('lodash'),
  * Lookup for type (phono, audio, sticker, video, document, location or message)
  */
 module.exports.lookupFunctionType = function(data, options) {
-    if(options.type)
-        return options.type;
+	var params = options || {};
 
-    var isFile = options.isFile;
+    if(params.type)
+        return params.type;
+
+    var isFile = params.isFile;
     if(!isFile && typeof data === 'string') {
         return "message";
     }
 
     if (isFile || data instanceof stream.Stream) {
         var fileName = URL.parse(path.basename(data.path)).pathname;
-        var mimeType = options.mime || mime.lookup(fileName);
+        var mimeType = params.mime || mime.lookup(fileName);
 
         if (_.includes(mimeTypes.photo, mimeType))   return "photo";
         if (_.includes(mimeTypes.audio, mimeType))   return "audio";

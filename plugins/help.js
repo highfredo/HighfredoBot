@@ -1,6 +1,19 @@
 'use strict';
 var _ = require('lodash');
 
+/*
+ ayuda general: /help
+ [] -> opcional
+ /comando param1 [param2]
+
+
+
+ ayuda especifica: /help comando
+ /comando param 1 [param2]
+ aliases: comando1, comando2, comando3
+ por defecto: param2=b
+ descripcion
+ */
 
 module.exports = function(bot) {
 

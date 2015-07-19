@@ -22,7 +22,7 @@ var reply = function (chatId) {
             return bot.sendChatAction(chatId, action);
         },
         send: function(data, options) {
-            var funtionType = utils.lookupFunctionType(data, options || {});
+            var funtionType = utils.lookupFunctionType(data, options);
 
             if(funtionType === 'message') {
                 return this.sendMessage(data, options);
@@ -122,7 +122,11 @@ bot.on('message', function (msg) {
         if(plugin.match(msg)) {
             foundPlugin = true;
             console.log(plugin.name + " valid.");
-            plugin.exec(msg, reply(msg.chat.id));
+            plugin.exec(msg, reply(msg.chat.id))
+                .catch(function(err) {
+                    console.log(err);
+                    bot.sendMessage(msg.chat.id, "Error procesando su petición");
+                });
             return false;
         }
     });
