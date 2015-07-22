@@ -16,7 +16,7 @@ module.exports = function(bot) {
         var pokemonInfo = {};
         return rp({url:api + pokemonQuery, json:true})
             .then(function(pokemon) {
-                pokemonInfo.text = 'PokÃ©dex ID: ' + pokemon.pkdx_id
+                pokemonInfo.text = 'Pokédex ID: ' + pokemon.pkdx_id
                     +'\nNombre: ' + pokemon.name
                     +'\nPeso: ' + (pokemon.weight/10) + " kg"
                     +'\nAltura: ' + (pokemon.height/10) + " m"
@@ -39,7 +39,7 @@ module.exports = function(bot) {
                 reply.send(pokemonInfo.image, {caption: pokemonInfo.text});
             })
             .catch(function(err){
-                reply.sendMessage("No se ha encontrado ningÃºn pokemon");
+                reply.sendMessage("No se ha encontrado ningún pokemon");
             });
     };
 
