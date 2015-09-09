@@ -2,7 +2,7 @@
 
 module.exports = function(bot) {
 
-    var name = "echo";
+    var name = "romu";
     var description = "Romu's message";
 
     var exec = function(msg, reply) {
